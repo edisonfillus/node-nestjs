@@ -20,6 +20,19 @@ app.useGlobalPipes(new ValidationPipe({
 }));
 ```
 
+## Enable .env Configuration
+Install config
+```bash
+$ npm install @nestjs/config
+```
+Create a .env file
+
+Include the module in app.module.ts
+```javascript
+ConfigModule.forRoot({isGlobal: true})
+```
+
+
 ## Enable TypeORM
 Install TypeORM
 ```bash
