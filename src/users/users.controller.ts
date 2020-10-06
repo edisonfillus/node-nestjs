@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
-import {UserCreateRequest} from "../../models/dtos/user-create-request.dto";
-import {UserUpdateRequest} from "../../models/dtos/user-update-request.dto";
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put} from '@nestjs/common';
+import {UserCreateRequest} from "./dtos/user-create-request.dto";
+import {UserUpdateRequest} from "./dtos/user-update-request.dto";
+import {ApiTags} from "@nestjs/swagger";
 
+@ApiTags("Users")
 @Controller('users')
 export class UsersController {
 
@@ -23,13 +25,14 @@ export class UsersController {
 
     @Put(':id')
     update(@Param('id') id: string, @Body() request: UserUpdateRequest) {
-      return `This action updates a #${id} cat`;
+        return `This action updates a #${id} cat`;
     }
 
     @Delete(':id')
     remove(@Param('id') id: string) {
-      return `This action removes a #${id} cat`;
+        return `This action removes a #${id} cat`;
     }
+
 
 
 }

@@ -1,11 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UsersController } from './controllers/users/users.controller';
+import { UsersModule } from './users/users.module';
+import { ProductsModule } from './products/products.module';
+import { TypeOrmModule } from '@nestjs/typeorm/dist';
 
 @Module({
-  imports: [],
-  controllers: [AppController, UsersController],
-  providers: [AppService],
+  imports: [
+    UsersModule, 
+    ProductsModule,
+    TypeOrmModule.forRoot({
+      type: 'sqljs',
+      synchronize: true,
+      entities: [__dirname + '/**/*.entity.{ts,js}'],
+      logging: "all"
+    })],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
