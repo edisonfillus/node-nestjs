@@ -7,32 +7,34 @@ import {
     HttpStatus,
     Param,
     Patch,
-    Post
+    Post,
+    UseGuards
 } from '@nestjs/common';
-import {ProductCreateRequest} from "./dtos/product-create-request.dto";
-import {ProductCreateResponse} from './dtos/product-create-response.dto';
-import {ProductFindResponse} from './dtos/product-find-response.dto';
-import {ProductListResponse} from './dtos/product-list-response.dto';
-import {ProductUpdateRequest} from './dtos/product-update-request.dto';
-import {ProductUpdateResponse} from './dtos/product-update-response.dto';
-import {ProductsService} from "./products.service";
-import {ApiResponse, ApiTags} from "@nestjs/swagger";
+import { ProductCreateRequest } from "./dtos/product-create-request.dto";
+import { ProductCreateResponse } from './dtos/product-create-response.dto';
+import { ProductFindResponse } from './dtos/product-find-response.dto';
+import { ProductListResponse } from './dtos/product-list-response.dto';
+import { ProductUpdateRequest } from './dtos/product-update-request.dto';
+import { ProductUpdateResponse } from './dtos/product-update-response.dto';
+import { ProductsService } from "./products.service";
+import { ApiResponse, ApiTags } from "@nestjs/swagger";
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags("Products")
 @Controller('products')
 export class ProductsController {
 
-    constructor(private productsService: ProductsService) {
-    }
+    constructor(private productsService: ProductsService) { }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    @ApiResponse({status: HttpStatus.BAD_REQUEST, description: 'Invalid Request'})
-    @ApiResponse({status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Internal Server Error'})
+    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid Request' })
+    @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Internal Server Error' })
     create(@Body() request: ProductCreateRequest): Promise<ProductCreateResponse> {
         return this.productsService.create(request);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get()
     findAll(): Promise<ProductListResponse[]> {
         return this.productsService.findAll();

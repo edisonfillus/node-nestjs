@@ -32,6 +32,28 @@ Include the module in app.module.ts
 ConfigModule.forRoot({isGlobal: true})
 ```
 
+## Enable Authorization
+Install Passport
+```bash
+$ npm install @nestjs/passport passport passport-local
+$ npm install --save-dev @types/passport-local
+```
+Create a auth and users module Module
+```bash
+$ nest generate module auth
+$ nest generate service auth
+$ nest generate module users
+$ nest generate service users
+```
+Implement the CRUD users, auth and passport strategies following tutorial: https://docs.nestjs.com/techniques/authentication
+
+Install JWT
+```
+$ npm install @nestjs/jwt passport-jwt
+$ npm install --save-dev @types/passport-jwt
+```
+
+
 
 ## Enable TypeORM
 Install TypeORM

@@ -3,6 +3,7 @@ import {UsersModule} from './users/users.module';
 import {ProductsModule} from './products/products.module';
 import {TypeOrmModule} from '@nestjs/typeorm/dist';
 import {ConfigModule, ConfigService} from "@nestjs/config";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -18,7 +19,8 @@ import {ConfigModule, ConfigService} from "@nestjs/config";
                 entities: [__dirname + '/**/*.entity.{ts,js}'],
                 logging: "all"
             })
-        })
+        }),
+        AuthModule
     ],
     controllers: [],
     providers: []
