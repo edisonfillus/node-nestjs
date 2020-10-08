@@ -23,14 +23,22 @@ app.useGlobalPipes(new ValidationPipe({
 ## Enable .env Configuration
 Install config
 ```bash
-$ npm install @nestjs/config
+$ npm install @nestjs/config @hapi/joi @types/hapi__joi
 ```
 Create a .env file
 
-Include the module in app.module.ts
-```javascript
-ConfigModule.forRoot({isGlobal: true})
+Include the module in app.module.ts, and add the validation schema
+```typescript
+        ConfigModule.forRoot({
+            isGlobal: true,
+            validationSchema: Joi.object({
+                JWT_SECRET: Joi.string().required(),
+                PORT: Joi.number()
+            })
+        })
 ```
+
+
 
 ## Enable Authorization
 Install Passport
@@ -48,11 +56,10 @@ $ nest generate service users
 Implement the CRUD users, auth and passport strategies following tutorial: https://docs.nestjs.com/techniques/authentication
 
 Install JWT
-```
+```bash
 $ npm install @nestjs/jwt passport-jwt
 $ npm install --save-dev @types/passport-jwt
 ```
-
 
 
 ## Enable TypeORM
