@@ -132,12 +132,11 @@ const options = new DocumentBuilder()
 ```
 
 
-
 ## Add a new module
 ```bash
-$ nest g module module-name
-$ nest g controller controler-name
-$ nest g service service-name
+$ nest generate module module-name
+$ nest generate controller controler-name
+$ nest generate service service-name
 ```
 
 ## Installation
