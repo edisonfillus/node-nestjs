@@ -1,7 +1,7 @@
-import { HttpException, HttpStatus } from "@nestjs/common";
+import { NotFoundException } from "@nestjs/common";
 
-export class ProductNotFoundException extends HttpException {
+export class ProductNotFoundException extends NotFoundException  {
     constructor(id: number) {
-        super("No product found with id: " + id, HttpStatus.NOT_FOUND);
+        super("No product found with id: " + id);
     }
 }

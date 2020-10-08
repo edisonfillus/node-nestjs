@@ -4,14 +4,22 @@ import {ProductsRepository} from "./products.repository";
 
 describe('ProductsService', () => {
   let service: ProductsService;
-  let repository: ProductsRepository;
+  let productsRepository = {
+    save: jest.fn(),
+    findOne: jest.fn()
+ };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ProductsService, ProductsRepository],
+      providers: [
+        ProductsService, 
+        {
+          provide: ProductsRepository,
+          useValue: productsRepository
+        }
+      ],
     }).compile();
 
-    repository = module.get<ProductsRepository>(ProductsRepository);
     service = module.get<ProductsService>(ProductsService);
   });
 
