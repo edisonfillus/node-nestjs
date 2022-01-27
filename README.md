@@ -3,7 +3,7 @@
 ## Create from scratch
 ```bash
 $ npm install -g @nestjs/cli
-$ nest new project-name
+$ nest new project-name --skip-git
 ```
 
 ## Enable Validation
