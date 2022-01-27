@@ -91,8 +91,26 @@ Create repositories
 @EntityRepository(Author)
 export class AuthorRepository extends Repository<Author> {}
 ```
-Configure on AppModule
-```javacript
+Configure in-memory database on AppModule
+```typescript
+@Module({
+  imports: [
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        type: 'sqljs',
+        synchronize: true,
+        entities: [__dirname + '/**/*.entity.{ts,js}'],
+        logging: "all"
+      })
+    }),
+  ],
+})
+```
+
+Configure a mysql database in AppModule
+```typescript
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -120,7 +138,7 @@ Configure on Feature Module
 export class AuthorModule {}
 ```
 Inject on services
-```
+```typescript
 @Injectable()
 export class AuthorService {
   constructor(private authorRepository: AuthorRepository) {}
