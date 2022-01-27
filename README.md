@@ -23,7 +23,7 @@ app.useGlobalPipes(new ValidationPipe({
 ## Enable .env Configuration
 Install config
 ```bash
-$ npm install @nestjs/config joy
+$ npm install @nestjs/config joi
 ```
 Create a .env file
 
