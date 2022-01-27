@@ -4,7 +4,7 @@ import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm/dist';
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AuthModule } from './auth/auth.module';
-import * as Joi from '@hapi/joi';
+import * as Joi from 'joi';
 
 @Module({
     imports: [

@@ -23,19 +23,25 @@ app.useGlobalPipes(new ValidationPipe({
 ## Enable .env Configuration
 Install config
 ```bash
-$ npm install @nestjs/config @hapi/joi @types/hapi__joi
+$ npm install @nestjs/config joy
 ```
 Create a .env file
 
 Include the module in app.module.ts, and add the validation schema
 ```typescript
-        ConfigModule.forRoot({
-            isGlobal: true,
-            validationSchema: Joi.object({
-                JWT_SECRET: Joi.string().required(),
-                PORT: Joi.number()
-            })
-        })
+import * as Joi from 'joi';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        JWT_SECRET: Joi.string().required(),
+        PORT: Joi.number()
+      })
+    })
+  ]
+})
 ```
 
 
