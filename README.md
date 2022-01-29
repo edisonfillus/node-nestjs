@@ -222,6 +222,23 @@ const options = new DocumentBuilder()
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 ```
+Annotate the DTO with `@ApiProperty`, or enable introspection on `nest-cli.json`
+```json
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "classValidatorShim": true
+        }
+      }
+    ]
+  }
+}
+```
 
 
 ## Add a new module
