@@ -28,13 +28,13 @@ export class ProductsService {
     }
 
     async findOne(id: number): Promise<ProductFindResponse> {
-        const product = await this.productsRepository.findOne({id})
+        const product = await this.productsRepository.findOne(id)
         if (!product) throw new ProductNotFoundException(id);
         return plainToClass(ProductFindResponse, product, {excludeExtraneousValues: true});
     }
 
     async update(id: number, changes: ProductUpdateRequest): Promise<ProductUpdateResponse> {
-        const product = await this.productsRepository.findOne({id})
+        const product = await this.productsRepository.findOne(id)
         if (!product) throw new ProductNotFoundException(id);
         plainToClassFromExist(product, changes);
         await this.productsRepository.save(product);
@@ -42,7 +42,7 @@ export class ProductsService {
     }
 
     async delete(id: number) {
-        await this.productsRepository.delete({id})
+        await this.productsRepository.delete(id)
     }
 
 }

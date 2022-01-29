@@ -87,9 +87,11 @@ $ npm install mongodb
 ```
 
 Create repositories
-```javascript
-@EntityRepository(Author)
-export class AuthorRepository extends Repository<Author> {}
+```typescript
+@EntityRepository()
+export class AuthorRepository {
+  constructor(private readonly manager: EntityManager) {}
+}
 ```
 Configure in-memory database on AppModule
 ```typescript
@@ -131,9 +133,9 @@ export class AppModule {}
 Configure on Feature Module
 ```javascript
 @Module({
-  imports: [TypeOrmModule.forFeature([AuthorRepository])],
+  imports: [TypeOrmModule.forFeature([Author])],
   controller: [AuthorController],
-  providers: [AuthorService],
+  providers: [AuthorService, AuthorRepository],
 })
 export class AuthorModule {}
 ```
@@ -144,6 +146,65 @@ export class AuthorService {
   constructor(private authorRepository: AuthorRepository) {}
 }
 ```
+
+###Testing with in-memory database
+sqljs
+```typescript
+let repository: RecipeRepository;
+let entityManager: EntityManager;
+
+beforeEach(async () => {
+  const module: TestingModule = await Test.createTestingModule({
+    imports: [
+      TypeOrmModule.forRoot({
+        type: 'sqljs',
+        synchronize: true,
+        entities: [Recipe, Ingredient],
+        keepConnectionAlive: false,
+        logging: "all"
+      }),
+    ],
+    providers: [RecipeRepository]
+  }).compile();
+  repository = module.get<RecipeRepository>(RecipeRepository);
+  entityManager = module.get<EntityManager>(EntityManager);
+})
+
+afterEach(async () => {
+  await entityManager.connection.close();
+});
+```
+sqlite3
+```typescript
+let repository: RecipeRepository;
+let entityManager: EntityManager;
+
+beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+        imports: [
+            TypeOrmModule.forRoot({
+                type: 'sqlite',
+                database: ':memory:',
+                dropSchema: true,
+                synchronize: true,
+                entities: [Recipe, Ingredient],
+                logging: "all",
+                keepConnectionAlive: false,
+            }),
+        ],
+        providers: [RecipeRepository]
+    }).compile();
+    repository = module.get<RecipeRepository>(RecipeRepository);
+    entityManager = module.get<EntityManager>(EntityManager);
+})
+
+afterEach(async () => {
+    await entityManager.connection.close();
+});
+```
+
+
+###Testing integrated with mysql wih atdatabases
 
 
 ## Enable Swagger for RestAPI Docs
